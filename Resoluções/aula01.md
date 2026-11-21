@@ -5,7 +5,7 @@
 
 Inicialmente, a ideia que vem a vem a cabeca eh armazenar tais numeros num vetor e preenche-lo.
 
-Isso daria uma complexidade O(n), e como n <= 2*10^5, o programa passaria em um limite de tempo 1000ms.
+Isso daria uma complexidade $O(n)$, e como n <= 2*10^5, o programa passaria em um limite de tempo 1000ms.
 
 1) Solucao com array:
 
@@ -47,25 +47,36 @@ Vamos considerar n = 5 para construir nosso raciocinio.
 
 Os numeros que podem estar na nossa lista sao:
 
-        {$1$, $2$, $3$, $4$, $5$}
+$$
+\{1, 2, 3, 4, 5}\
+$$
 
 Como esses elementos formam uma PA de razao 1, sabemos que:
+
 $$
 S_{\text{total}} = \frac{n(n+1)}{2}
 $$
+
 Caso o elemento 2 fosse o elemento que falta, teriamos:
 
-        {$1$, $x$, $3$, $4$, $5$}
+$$
+\{1, x, 3, 4, 5}\
+$$
 
 Que, como vimos, possui soma:
+
 $$
-S_{\text{atual}} = 1 + x + 2 + 3 + 4 + 5
+S_{\text{atual}} = 1 + x + 3 + 4 + 5
 $$
+
 Seja Soma_atual a soma de todos os elemento que estao presentes na lista, entao:
 
-        S_{\text{total}} = S_{\text{atual}} + x
+$$
+S_{\text{total}} = S_{\text{atual}} + x
+$$
 
 Logo,
+
 $$
 \boxed{x = S_{\text{total}} - S_{\text{atual}}}
 $$
