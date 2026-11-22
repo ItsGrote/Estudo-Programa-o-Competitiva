@@ -214,7 +214,143 @@ int main(){
 
     return 0;
 }
+```
 
 Sendo assim, resolvemos o problema com:
 - Tempo: $O(n)$
+- Memoria: $O(1)$
+
+## Number Spiral
+
+Para essa questao, percorrer um for loop aninhado e inviavel computacionalmente.
+
+Devemos partir para a ideia de, apenas com as informacoes de linha ($i$) e coluna ($j$) calcularmos o elemento em tal posicao.
+
+Vamos estudar paroes dessa matriz em espiral.
+
+
+Note que a diagonal principal eh uma PA de segunda ordem:
+
+$$
+b_{\text{n}} = \{1, 3, 7, 13, 21, ...}\
+$$
+
+E a razao e a seguinte PA:
+
+$$
+a_{\text{n}} = \{2, 4, 6, 8, 10, ...}\
+$$
+
+Entao, se quisermos o elemento $b_{\text{n}}$ temos que fazer a seguinte conta:
+
+$$
+{b_{\text{n}} = b_{1} + \sum_{i=1}^{n-1} a_{\text{i}}}
+$$
+
+E, por sua vez, $\sum_{i=1}^{n-1} a_{\text{i}}$ e a soma de uma PA de razao 2, que e dada por:
+
+$$
+\sum_{i=1}^{n-1} a_{\text{i}} = 2\frac{n(n+1)}{2}
+$$
+
+Logo, o termo gera da diagonal em espiral apresentada e:
+
+$$
+{b_{\text{n}} = 1 + n(n-1)} 
+$$
+
+Agora, temos que pensar em como relacionar o elemento da diganol principal com o elemento escolhido.
+
+* vamos pegar o elemento $m_{33} = 7$ (*em linhas impares*), veja que:
+
+- Ao percorrermos a mesma linha $i = 3$ para a esquerda, subtraimos $1$ a cada coluna.
+
+- Ao percorrermos a mesma coluna $j = 3$ para cima, somamos $1$ a cada linha.
+
+* vamos pegar o elemento $m_{44} = 13$ (*em linhas pares*), veja que:
+
+- Ao percorrermos a mesma linha $i = 4$ para a esquerda, somamos $1$ a cada coluna.
+
+- Ao percorrermos a mesma coluna $j = 4$ para cima, subtraimos $1$ a cada linha.
+
+**Conlcusao:** Dependendo da paridade do indice do elemento diagnal, fazemos acoes diferentes. 
+
+Finalmente, vamos relacionar uma elemento $m_{\text{ij}}$ qualquer com o elemnteto da diagonall principal:
+
+- Se $i > j$:
+escolhemos o elemento $m_{/text{ii}}$
+
+- Se $i < j$:
+escolhemos o elemento $m_{/text{jj}}$
+
+Por fim, para chegar no valor de $m_{\text{ij}}$ verificamos a paridade e somamos o numero de linhas ou colunas que faltam para chegar no elemento pedido.
+
+Exemplo:
+Queremos saber qual o elemento $m_{24}$.
+
+Como $2 < 4$, vamos pegar o elemento da digonal principal:
+
+$$
+m_{44}
+$$
+
+Pelo termo geral da PA de segunda ordem, temos:
+
+$$
+m_{44} = b_{4} = 1 + \frac{4(4-1)} = 13
+$$
+
+Como se trata de linhas pares, temos:
+
+$$
+m_{24} = m_{44} + (4 - 2) = 11
+$$
+
+De fato, observando a matriz dada pelo enunciado, $m_{24} = 11$
+
+Encontramos uma maneira de achar qualquer elemento $m_{\text{ij}}$ sem percorrer a matriz.
+
+Vamos a codificacao:
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+    int t;
+    cin >> t;
+
+    for(int k = 0; k < t; k++){
+        long long i, j, diag, ans;
+        cin >> i >> j;
+
+        if(i > j){
+            diag = 1 + i*(i-1);
+
+            if(i % 2 == 0){
+                ans = diag + (i - j);
+            } else {
+                ans = diag -(i - j);
+            }
+        } else {
+            diag = 1 + j*(j-1);
+
+            if(j % 2 == 0){
+                ans = diag - (j - i);
+            } else {
+                ans = diag + (j - i);
+            }
+        }
+
+        cout << ans << '\n';
+    }
+
+
+    return 0;
+}
+```
+
+Sendo assim, resolvemos o problema com:
+- Tempo: $O(1)$ (por consulta)
 - Memoria: $O(1)$
