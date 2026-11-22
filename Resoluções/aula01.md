@@ -354,3 +354,77 @@ int main(){
 Sendo assim, resolvemos o problema com:
 - Tempo: $O(1)$ (por consulta)
 - Memoria: $O(1)$
+
+## Mex Grid Construction
+
+A ideia e criar uma funcao que percorre todos os numero a esquerda e acima do elemento $m_{\text{ij}}$
+marca-los com $visitado$ em um vetor booleano. Em seguida, pecorrer esse vetor e encontar o primo elemento NAO visitado, o indice desse elemento sera o numero que entra na posicao de $m_{\text{ij}}$.
+
+Vamos codificar!
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+
+int check(vector<vector<int>> &m, int x, int y, int n){
+    int melhor = -1;
+
+    bool visto[10001] = {false};
+
+    //linha esquerda
+    for(int j = y - 1; j >= 0; j-- ){
+        if(!visto[m[x][j]]){
+            visto[m[x][j]] = true;
+        }
+    }
+
+    //coluna cima
+    for(int i = x - 1; i >= 0; i--){
+        if(!visto[m[i][y]]){
+            visto[m[i][y]] = true;
+        }
+    }
+    
+
+    for(int k = 0; k < 10001; k++){
+        if(!visto[k]){
+            melhor = k;
+            break;
+        }
+    }
+
+    return melhor;
+}
+
+int main(){
+    int n;
+    cin >> n;
+
+    vector<vector<int>> m(n, vector<int>(n, 0));
+
+
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < n; j++){
+
+            m[i][j] = check(m, i, j, n);
+        
+        }
+    }
+
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < n; j++){
+            cout << m[i][j] << ' ';
+        }
+        cout << '\n';
+    }
+
+
+    return 0;
+}
+```
+
+Sendo assim, resolvemos o problema com:
+- Tempo: $O(n^{3})$
+- Memoria: $O(n^{2})$
+
+*Obs:* Nessa questao o codigo passo pois n e limitado em 100, mas uma solucao com complexidade cubica nem sempre passa. Vi uma solucao com compllixidade temporal $O(n^2)$, mas nao entendi. Tenho que estudar mais para entende-la e passar pra ca.
