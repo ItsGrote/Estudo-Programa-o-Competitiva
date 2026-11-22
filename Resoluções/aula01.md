@@ -1,13 +1,14 @@
-## Resolucao dos Problemas da Prova 01
-- Eletiva: Programacao Competitiva I
+
+# Resolução dos Problemas da Prova 01
+- Eletiva: Programação Competitiva I
 
 ## Missing Number
 
-Inicialmente, a ideia que vem a vem a cabeca eh armazenar tais numeros num vetor e preenche-lo.
+Inicialmente, a ideia que vem à cabeça é armazenar tais números num vetor e preenchê-lo.
 
-Isso daria uma complexidade $O(n)$, e como $n \leq 2*10^5$, o programa passaria em um limite de tempo 1000ms.
+Isso daria uma complexidade $O(n)$ e, como $n \leq 2 \cdot 10^5$, o programa passaria em um limite de tempo de 1000 ms.
 
-1) Solucao com array:
+1) Solução com array:
 
 ```cpp
 #include<bits/stdc++.h>
@@ -43,28 +44,28 @@ int main(){
 
 Sendo assim, resolvemos o problema com:
 - Tempo: $O(n)$
-- Memoria: $O(n)$
+- Memória: $O(n)$
 
-Caso o problema fosse mais rigoroso com o limite de tempo ou de memoria, teriamos que ter uma **sacada** para resover tal problema.
+Caso o problema fosse mais rigoroso com o limite de tempo ou de memória, teríamos que ter uma **sacada** para resolver tal problema.
 
-Vamos considerar n = 5 para construir nosso raciocinio.
+Vamos considerar $n = 5$ para construir nosso raciocínio.
 
-Os numeros que podem estar na nossa lista sao:
+Os números que podem estar na nossa lista são:
 
 $$
-\{1, 2, 3, 4, 5}\
+\{1, 2, 3, 4, 5\}
 $$
 
-Como esses elementos formam uma PA de razao 1, sabemos que:
+Como esses elementos formam uma PA de razão 1, sabemos que:
 
 $$
 S_{\text{total}} = \frac{n(n+1)}{2}
 $$
 
-Caso o elemento 2 fosse o elemento que falta, teriamos:
+Caso o elemento 2 fosse o elemento que falta, teríamos:
 
 $$
-\{1, x, 3, 4, 5}\
+\{1, x, 3, 4, 5\}
 $$
 
 Que, como vimos, possui soma:
@@ -73,7 +74,7 @@ $$
 S_{\text{atual}} = 1 + x + 3 + 4 + 5
 $$
 
-Seja Soma_atual a soma de todos os elemento que estao presentes na lista, entao:
+Seja Soma_atual a soma de todos os elementos que estão presentes na lista. Então:
 
 $$
 S_{\text{total}} = S_{\text{atual}} + x
@@ -85,9 +86,9 @@ $$
 \boxed{x = S_{\text{total}} - S_{\text{atual}}}
 $$
 
-Potantos, podemos resolver tal problema pensando somente nas somas de todos os ellementos ate n e na soma de todos os elementos presentes.
+Portanto, podemos resolver tal problema pensando somente na soma de todos os elementos até $n$ e na soma de todos os elementos presentes.
 
-2) Solucao ideal:
+2) Solução ideal:
 
 ```cpp
 #include<bits/stdc++.h>
@@ -115,17 +116,17 @@ int main(){
 
 Sendo assim, resolvemos o problema com:
 - Tempo: $O(n)$
-- Memoria: $O(1)$
+- Memória: $O(1)$
 
 ## Increasing Array
 
-Para o problema do array crescente devemos comparar os elementos dois a dois e vermos se eles satisfazem a seguinte propriedade:
+Para o problema do array crescente, devemos comparar os elementos dois a dois e ver se eles satisfazem a seguinte propriedade:
 
 $$
 v[i + 1] \geq v[i]
 $$
 
-Que e a definicao de um array crescente. Entao, se encotrarmos o o contrarios, devemos ajustar somando o minimo possivel para garantir que o array fique crescente. Ou seja, se
+Que é a definição de um array crescente. Então, se encontrarmos o contrário, devemos ajustar somando o mínimo possível para garantir que o array fique crescente. Ou seja, se
 
 $$
 v[i + 1] < v[i]
@@ -143,7 +144,7 @@ $$
 v[i + 1] = v[i]
 $$
 
-Vejamos a codificao:
+Vejamos a codificação:
 
 ```cpp
 #include<bits/stdc++.h>
@@ -155,7 +156,7 @@ int main(){
 
     vector<long long> v(n);
 
-    for(int i = 0; i < n; i++){
+    for(int i = 0; i < n - 1; i++){
         cin >> v[i];
     }
 
@@ -173,17 +174,18 @@ int main(){
     return 0;
 }
 ```
+
 Sendo assim, resolvemos o problema com:
 - Tempo: $O(n)$
-- Memoria: $O(n)$
+- Memória: $O(n)$
 
-Agora, vamos codificar  analisando a condicao de array crescente durante as entradas!
+Agora, vamos codificar analisando a condição de array crescente durante as entradas!
 
-Vamos comecar recebendo o valor  de n (tamanho do array), em seguida, vamos receber o primeiro valor do array em um variavel chamada $anterior$. Depois, receber  o proximo valor numa variavel chamada $atual$.
+Vamos começar recebendo o valor de $n$ (tamanho do array). Em seguida, vamos receber o primeiro valor do array em uma variável chamada $anterior$. Depois, receber o próximo valor numa variável chamada $atual$.
 
-Para cara iteracao no loop, o valor $atual$ vira o valor $anterior$ e recebemos um novo valor $atual$ para compararmos.
+Para cada iteração no loop, o valor $atual$ vira o valor $anterior$ e recebemos um novo valor $atual$ para compararmos.
 
-Vamos ver isso em codigo!
+Vamos ver isso em código!
 
 ```cpp
 #include <bits/stdc++.h>
@@ -218,77 +220,76 @@ int main(){
 
 Sendo assim, resolvemos o problema com:
 - Tempo: $O(n)$
-- Memoria: $O(1)$
+- Memória: $O(1)$
 
 ## Number Spiral
 
-Para essa questao, percorrer um for loop aninhado e inviavel computacionalmente.
+Para essa questão, percorrer um for loop aninhado é inviável computacionalmente.
 
-Devemos partir para a ideia de, apenas com as informacoes de linha ($i$) e coluna ($j$) calcularmos o elemento em tal posicao.
+Devemos partir para a ideia de, apenas com as informações de linha ($i$) e coluna ($j$), calcularmos o elemento em tal posição.
 
-Vamos estudar paroes dessa matriz em espiral.
+Vamos estudar padrões dessa matriz em espiral.
 
-
-Note que a diagonal principal eh uma PA de segunda ordem:
-
-$$
-b_{\text{n}} = \{1, 3, 7, 13, 21, ...}\
-$$
-
-E a razao e a seguinte PA:
+Note que a diagonal principal é uma PA de segunda ordem:
 
 $$
-a_{\text{n}} = \{2, 4, 6, 8, 10, ...}\
+b_n = \{1, 3, 7, 13, 21, \ldots\}
 $$
 
-Entao, se quisermos o elemento $b_{\text{n}}$ temos que fazer a seguinte conta:
+E a razão é a seguinte PA:
 
 $$
-{b_{\text{n}} = b_{1} + \sum_{i=1}^{n-1} a_{\text{i}}}
+a_n = \{2, 4, 6, 8, 10, \ldots\}
 $$
 
-E, por sua vez, $\sum_{i=1}^{n-1} a_{\text{i}}$ e a soma de uma PA de razao 2, que e dada por:
+Então, se quisermos o elemento $b_n$, temos que fazer a seguinte conta:
 
 $$
-\sum_{i=1}^{n-1} a_{\text{i}} = 2\frac{n(n+1)}{2}
+b_n = b_1 + \sum_{i=1}^{n-1} a_i
 $$
 
-Logo, o termo gera da diagonal em espiral apresentada e:
+E, por sua vez, $\sum_{i=1}^{n-1} a_i$ é a soma de uma PA de razão 2, que é dada por:
 
 $$
-{b_{\text{n}} = 1 + n(n-1)} 
+\sum_{i=1}^{n-1} a_i = 2\frac{n(n+1)}{2}
 $$
 
-Agora, temos que pensar em como relacionar o elemento da diganol principal com o elemento escolhido.
+Logo, o termo geral da diagonal em espiral apresentada é:
 
-* vamos pegar o elemento $m_{33} = 7$ (*em linhas impares*), veja que:
+$$
+b_n = 1 + n(n-1)
+$$
 
-- Ao percorrermos a mesma linha $i = 3$ para a esquerda, subtraimos $1$ a cada coluna.
+Agora, temos que pensar em como relacionar o elemento da diagonal principal com o elemento escolhido.
 
-- Ao percorrermos a mesma coluna $j = 3$ para cima, somamos $1$ a cada linha.
+* Vamos pegar o elemento $m_{33} = 7$ (**em linhas ímpares**), veja que:
 
-* vamos pegar o elemento $m_{44} = 13$ (*em linhas pares*), veja que:
+1) Ao percorrermos a mesma linha $i = 3$ para a esquerda, subtraímos $1$ a cada coluna.
 
-- Ao percorrermos a mesma linha $i = 4$ para a esquerda, somamos $1$ a cada coluna.
+2) Ao percorrermos a mesma coluna $j = 3$ para cima, somamos $1$ a cada linha.
 
-- Ao percorrermos a mesma coluna $j = 4$ para cima, subtraimos $1$ a cada linha.
+* Vamos pegar o elemento $m_{44} = 13$ (**em linhas pares**), veja que:
 
-**Conlcusao:** Dependendo da paridade do indice do elemento diagnal, fazemos acoes diferentes. 
+1) Ao percorrermos a mesma linha $i = 4$ para a esquerda, somamos $1$ a cada coluna.
 
-Finalmente, vamos relacionar uma elemento $m_{\text{ij}}$ qualquer com o elemnteto da diagonall principal:
+2) Ao percorrermos a mesma coluna $j = 4$ para cima, subtraímos $1$ a cada linha.
+
+**Conclusão:** Dependendo da paridade do índice do elemento da diagonal, fazemos ações diferentes.
+
+Finalmente, vamos relacionar um elemento $m_{ij}$ qualquer com o elemento da diagonal principal:
 
 - Se $i > j$:
-escolhemos o elemento $m_{/text{ii}}$
+escolhemos o elemento $m_{ii}$.
 
 - Se $i < j$:
-escolhemos o elemento $m_{/text{jj}}$
+escolhemos o elemento $m_{jj}$.
 
-Por fim, para chegar no valor de $m_{\text{ij}}$ verificamos a paridade e somamos o numero de linhas ou colunas que faltam para chegar no elemento pedido.
+Por fim, para chegar ao valor de $m_{ij}$, verificamos a paridade e somamos o número de linhas ou colunas que faltam para chegar ao elemento pedido.
 
 Exemplo:
-Queremos saber qual o elemento $m_{24}$.
+Queremos saber qual é o elemento $m_{24}$.
 
-Como $2 < 4$, vamos pegar o elemento da digonal principal:
+Como $2 < 4$, vamos pegar o elemento da diagonal principal:
 
 $$
 m_{44}
@@ -297,7 +298,7 @@ $$
 Pelo termo geral da PA de segunda ordem, temos:
 
 $$
-m_{44} = b_{4} = 1 + \frac{4(4-1)} = 13
+m_{44} = b_4 = 1 + 4(4-1) = 13
 $$
 
 Como se trata de linhas pares, temos:
@@ -306,11 +307,11 @@ $$
 m_{24} = m_{44} + (4 - 2) = 11
 $$
 
-De fato, observando a matriz dada pelo enunciado, $m_{24} = 11$
+De fato, observando a matriz dada pelo enunciado, $m_{24} = 11$.
 
-Encontramos uma maneira de achar qualquer elemento $m_{\text{ij}}$ sem percorrer a matriz.
+Encontramos uma maneira de achar qualquer elemento $m_{ij}$ sem percorrer a matriz.
 
-Vamos a codificacao:
+Vamos à codificação:
 
 ```cpp
 #include<bits/stdc++.h>
@@ -353,12 +354,11 @@ int main(){
 
 Sendo assim, resolvemos o problema com:
 - Tempo: $O(1)$ (por consulta)
-- Memoria: $O(1)$
+- Memória: $O(1)$
 
 ## Mex Grid Construction
 
-A ideia e criar uma funcao que percorre todos os numero a esquerda e acima do elemento $m_{\text{ij}}$
-marca-los com $visitado$ em um vetor booleano. Em seguida, pecorrer esse vetor e encontar o primo elemento NAO visitado, o indice desse elemento sera o numero que entra na posicao de $m_{\text{ij}}$.
+A ideia é criar uma função que percorre todos os números à esquerda e acima do elemento $m_{ij}$, marcá-los como `visitado` em um vetor booleano. Em seguida, percorrer esse vetor e encontrar o primeiro elemento NÃO visitado. O índice desse elemento será o número que entra na posição de $m_{ij}$.
 
 Vamos codificar!
 
@@ -384,7 +384,6 @@ int check(vector<vector<int>> &m, int x, int y, int n){
             visto[m[i][y]] = true;
         }
     }
-    
 
     for(int k = 0; k < 10001; k++){
         if(!visto[k]){
@@ -407,7 +406,6 @@ int main(){
         for(int j = 0; j < n; j++){
 
             m[i][j] = check(m, i, j, n);
-        
         }
     }
 
@@ -425,6 +423,6 @@ int main(){
 
 Sendo assim, resolvemos o problema com:
 - Tempo: $O(n^{3})$
-- Memoria: $O(n^{2})$
+- Memória: $O(n^{2})$
 
-*Obs:* Nessa questao o codigo passo pois n e limitado em 100, mas uma solucao com complexidade cubica nem sempre passa. Vi uma solucao com compllixidade temporal $O(n^2)$, mas nao entendi. Tenho que estudar mais para entende-la e passar pra ca.
+**Obs:** Nessa questão, o código passou, pois $n$ é limitado a 100, mas uma solução com complexidade cúbica nem sempre passa. Vi uma solução com complexidade temporal $O(n^2)$, mas não entendi. Tenho que estudar mais para entendê-la e passar pra cá.
