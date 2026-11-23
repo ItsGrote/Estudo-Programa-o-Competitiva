@@ -426,3 +426,95 @@ Sendo assim, resolvemos o problema com:
 - Memória: $O(n^{2})$
 
 **Obs:** Nessa questão, o código passou, pois $n$ é limitado a 100, mas uma solução com complexidade cúbica nem sempre passa. Vi uma solução com complexidade temporal $O(n^2)$, mas não entendi. Tenho que estudar mais para entendê-la e passar pra cá.
+
+
+## Apple Division
+
+Note que $n \leq 20$. Portanto, podemos verificar todas as somas possíveis dos subconjuntos de maçãs, utilizando uma solução de complexidade $O(2^n)$, que, dadas as restrições do problema, será suficiente.
+
+A ideia é calcular a soma de todos os pesos das maçãs, $S_{\text{total}}$, escolher um grupo cuja soma seja $S_{\text{grupo}}$ e verificar se essa divisão produz a menor diferença possível entre os dois grupos.
+
+Sabemos que, ao definir um grupo, o outro já estará automaticamente definido. Portanto:
+
+$$
+S_{\text{total}} = S_{\text{grupo}} + S_{\text{resto}}
+$$
+
+A diferença absoluta entre as somas dos dois grupos é:
+
+$$
+Dif = |S_{\text{resto}} - S_{\text{grupo}}|
+$$
+
+Como:
+
+$$
+S_{\text{resto}} = S_{\text{total}} - S_{\text{grupo}}
+$$
+
+Substituindo na expressão anterior, obtemos:
+
+$$
+\boxed{Dif = |S_{\text{total}} - 2S_{\text{grupo}}|}
+$$
+
+Portanto, queremos **MINIMIZAR** essa expressão.
+
+Para isso, utilizaremos **FORÇA BRUTA COM RECURSÃO**, verificando todas as diferenças possíveis.
+
+Em cada chamada recursiva, temos duas possibilidades:
+
+- Incluir a maçã atual no grupo.
+- Não incluir a maçã atual no grupo.
+
+Quando todas as maçãs tiverem sido consideradas, calculamos a diferença entre os dois grupos e atualizamos a menor diferença encontrada.
+
+Vamos ao código!
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+void dif_min(vector<long long>& v, int i, long long soma_total,
+             long long soma_atual, long long& ans) {
+
+    // Condicao de parada
+    if (i == v.size()) {
+        ans = min(ans, abs(soma_total - 2 * soma_atual));
+        return;
+    }
+
+    // Pegar a maca i
+    dif_min(v, i + 1, soma_total, soma_atual + v[i], ans);
+
+    // Nao pegar a maca i
+    dif_min(v, i + 1, soma_total, soma_atual, ans);
+}
+
+int main() {
+    int n;
+    cin >> n;
+
+    vector<long long> v(n);
+
+    long long soma_total = 0;
+
+    for (int i = 0; i < n; i++) {
+        cin >> v[i];
+        soma_total += v[i];
+    }
+
+    long long ans = LLONG_MAX;
+
+    dif_min(v, 0, soma_total, 0, ans);
+
+    cout << ans << '\n';
+
+    return 0;
+}
+```
+Sendo assim, resolvemos o problema com:
+- Tempo: $O(2^{n})$
+- Memória: $O(n)$
+
+
