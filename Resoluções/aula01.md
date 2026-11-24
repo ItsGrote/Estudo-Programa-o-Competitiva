@@ -518,3 +518,99 @@ Sendo assim, resolvemos o problema com:
 - Memória: $O(n)$
 
 
+## Stick Lengths
+
+A primeira ideia que vem à cabeça é calcular a média dos tamanhos das varetas e ajustar todas para esse tamanho. Porém, a média falha em casos extremos, nos quais um tamanho é muito maior em relação aos outros.
+
+Por exemplo, considere varetas com os seguintes tamanhos:
+
+$$
+T = \{1, 1, 100\}
+$$
+
+Veja que a média é:
+
+$$
+\text{Média} = \frac{1 + 1 + 100}{3} = 34
+$$
+
+Então, o custo seria:
+
+$$
+\begin{aligned}
+C_{\text{média}} &= (34 - 1) + (34 - 1) + (100 - 34) \\
+C_{\text{média}} &= 33 + 33 + 66 \\
+C_{\text{média}} &= 132
+\end{aligned}
+$$
+
+Vamos comparar com o custo utilizando a **mediana**!
+
+Como $\text{Mediana} = 1$, temos:
+
+$$
+\begin{aligned}
+C_{\text{mediana}} &= (1 - 1) + (1 - 1) + (100 - 1) \\
+C_{\text{mediana}} &= 0 + 0 + 99 \\
+C_{\text{mediana}} &= 99
+\end{aligned}
+$$
+
+Nesse exemplo, percebemos que escolher a mediana resulta em um custo menor.
+
+De fato, a mediana é um valor que minimiza a soma das diferenças absolutas entre os elementos de um conjunto e um valor escolhido. Ou seja, queremos minimizar:
+
+$$
+C(x) = \sum_{i=1}^{n} |t_i - x|
+$$
+
+Esse custo é mínimo quando escolhemos $x$ como a mediana dos tamanhos das varetas.
+
+Vamos codificar essa solução:
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+    int n;
+    cin >> n;
+
+    vector<long long> stick(n);
+
+    for(int i = 0; i < n; i++){
+        cin >> stick[i];
+    }
+
+    sort(stick.begin(), stick.end());
+
+    long long mediana;
+
+    if(n % 2 == 0){
+        mediana = (stick[n/2] + stick[n/2 - 1])/2;
+    } else {
+        mediana = stick[n/2];
+    }
+
+    long long cost = 0;
+
+    for(int i = 0; i < n; i++){
+        cost += abs(mediana - stick[i]);
+    }
+
+    cout << cost << '\n';
+
+    return 0;
+}
+```
+
+Sendo assim, resolvemos o problema com:
+
+- **Tempo:** $O(n\log n)$
+- **Memória:** $O(n)$
+
+**Conclusão:** sempre que a média surgir como uma possível solução para um problema, teste casos extremos, nos quais a diferença entre os valores seja muito grande. Em problemas que envolvem a minimização da soma das diferenças absolutas, considere utilizar a mediana.
+
+
+
